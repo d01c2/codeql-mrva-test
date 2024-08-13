@@ -13,5 +13,8 @@ predicate semanticTemplate(ObjectPattern objPattern) {
 }
 
 from ObjectPattern objPattern
-where syntacticTemplate(objPattern) and semanticTemplate(objPattern)
+where
+  syntacticTemplate(objPattern) and
+  semanticTemplate(objPattern) and
+  not objPattern.flow().analyze().getAValue().isIndefinite(_) // !debug
 select objPattern, "Detected babel issue #14982", objPattern.flow().analyze().getAValue()
